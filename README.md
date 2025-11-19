@@ -103,7 +103,7 @@ Fig 14 - products are added to cart and can be viewed in DB as well, Account use
 hence by observing fig 13 and 14 which concludes that the database works fine for multiple accounts
 
 
-## Important cmds to be run
+## Important cmds and lib used to be run
 
 1. `node --version` - checks the node/npm version
 2. `npm install` - installs everything that are essential to run
@@ -113,4 +113,19 @@ hence by observing fig 13 and 14 which concludes that the database works fine fo
 6. `use <dbname>` - uses the database
 7. `show collections` - displayes the collections in the database
 8. `db.<collection name>.find().pretty()` - displayes the avaliable content
+9. we used bcrypt library, to do password authentication process
+    Takes username -> Converts into hash by using hashing algo - > stores in DB
+10. The below code snippet shows the logic used for password creation and hashing of it
 
+   const strongPassword =
+    password.length >= 8 &&
+    /[A-Z]/.test(password) &&
+    /[0-9]/.test(password) &&
+    /[^A-Za-z0-9]/.test(password);
+
+  if (!strongPassword) {
+    return res.redirect("/signup?error=WeakPassword");
+  }
+
+  // Hash password
+  const hashed = await bcrypt.hash(password, 10);
